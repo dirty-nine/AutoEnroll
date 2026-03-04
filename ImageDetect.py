@@ -31,8 +31,12 @@ def findIconConfidence(templatePath, x1 = 0, y1 = 0, x2 = 0, y2 = 0):
     confidence = result.max()
     return(confidence)
 
-def findIconLocation(templatePath, top=0, left=0, width=0, height=0):
+def findIconLocation(templatePath, x1 = 0, y1 = 0, x2 = 0, y2 = 0):
     # get screen width and height
+    left = x1 
+    top = y1
+    width = x2-x1
+    height = y2-y1
     if (width == 0 or height == 0):
         with mss.mss() as sct:
             monitor = sct.monitors[1]  # primary monitor
@@ -67,4 +71,8 @@ def findIconLocation(templatePath, top=0, left=0, width=0, height=0):
             "top_left": (screen_x, screen_y),
             "center": (center_x, center_y)
         }
-    return confidence
+    return {
+        "confidence": confidence,
+        "top_left": (0,0),
+        "center": (0,0)
+    }
